@@ -1,45 +1,6 @@
-<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+@extends('layouts.app')
 
-<style>
-    .input {
-        transition: border 0.2s ease-in-out;
-        min-width: 280px
-    }
-
-    .input:focus + .label,
-    .input:active + .label,
-    .input.filled + .label {
-        font-size: .75rem;
-        transition: all 0.2s ease-out;
-        top: -0.1rem;
-        color: #667eea;
-    }
-
-    .label {
-        transition: all 0.2s ease-out;
-        top: 0.4rem;
-        left: 0;
-    }
-</style>
-
-<div class="text-gray-900 bg-gray-200 min-h-screen">
-    <div class="hidden bg-blue-dark md:block md:bg-white md:border-b">
-        <div class="container mx-auto px-4">
-            <div class="md:flex">
-                <div class="flex -mb-px mr-8">
-                    <div href="#"
-                         class="no-underline md:text-indigo-600 flex items-center py-4 border-b border-blue-dark">
-                        <svg class="h-6 w-6 fill-current mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                  d="M3.889 3h6.222a.9.9 0 0 1 .889.91v8.18a.9.9 0 0 1-.889.91H3.89A.9.9 0 0 1 3 12.09V3.91A.9.9 0 0 1 3.889 3zM3.889 15h6.222c.491 0 .889.384.889.857v4.286c0 .473-.398.857-.889.857H3.89C3.398 21 3 20.616 3 20.143v-4.286c0-.473.398-.857.889-.857zM13.889 11h6.222a.9.9 0 0 1 .889.91v8.18a.9.9 0 0 1-.889.91H13.89a.9.9 0 0 1-.889-.91v-8.18a.9.9 0 0 1 .889-.91zM13.889 3h6.222c.491 0 .889.384.889.857v4.286c0 .473-.398.857-.889.857H13.89C13.398 9 13 8.616 13 8.143V3.857c0-.473.398-.857.889-.857z"></path>
-                        </svg>
-                        Histórico de medições
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+@section('content')
     <div class="flex justify-center px-16 py-4 text-md">
         <div class="w-8/12">
             <table class="w-full bg-white shadow-md rounded mb-4">
@@ -88,7 +49,8 @@
                     @csrf
 
                     @if(!empty(\Session::get('success')))
-                        <div class="mb-3 px-4 py-1 bg-green-100 border border-green-400 text-green-700 rounded relative">
+                        <div
+                            class="mb-3 px-4 py-1 bg-green-100 border border-green-400 text-green-700 rounded relative">
                             <strong class="font-bold">
                                 {{ \Session::get('success') }}
                             </strong>
@@ -125,33 +87,33 @@
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    let toggleInputContainer = function (input) {
-        if (input.value != "") {
-            input.classList.add('filled');
-        } else {
-            input.classList.remove('filled');
+    <script>
+        let toggleInputContainer = function (input) {
+            if (input.value != "") {
+                input.classList.add('filled');
+            } else {
+                input.classList.remove('filled');
+            }
         }
-    }
 
-    let labels = document.querySelectorAll('.label');
+        let labels = document.querySelectorAll('.label');
 
-    for (var i = 0; i < labels.length; i++) {
-        labels[i].addEventListener('click', function () {
-            this.previousElementSibling.focus();
-        });
-    }
-
-    window.addEventListener("load", function () {
-        var inputs = document.getElementsByClassName("input");
-        for (var i = 0; i < inputs.length; i++) {
-            console.log('looped');
-            inputs[i].addEventListener('keyup', function () {
-                toggleInputContainer(this);
+        for (var i = 0; i < labels.length; i++) {
+            labels[i].addEventListener('click', function () {
+                this.previousElementSibling.focus();
             });
-            toggleInputContainer(inputs[i]);
         }
-    });
-</script>
+
+        window.addEventListener("load", function () {
+            var inputs = document.getElementsByClassName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                console.log('looped');
+                inputs[i].addEventListener('keyup', function () {
+                    toggleInputContainer(this);
+                });
+                toggleInputContainer(inputs[i]);
+            }
+        });
+    </script>
+@endsection
