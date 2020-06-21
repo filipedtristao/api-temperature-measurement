@@ -1,2 +1,2 @@
 web: vendor/bin/heroku-php-apache2 public/
-release: php artisan migrate
+release: touch database/database.sqlite && php artisan migrate
