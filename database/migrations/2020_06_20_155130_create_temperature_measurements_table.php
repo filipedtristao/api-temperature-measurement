@@ -16,9 +16,9 @@ class CreateTemperatureMeasurementsTable extends Migration
         Schema::create('temperature_measurements', function (Blueprint $table) {
             $table->integer('id', true);
             $table->float('temperature');
-            $table->float('min_temperature');
-            $table->float('max_temperature');
-            $table->tinyInteger('is_notifiable');
+            $table->float('min_temperature')->nullable();
+            $table->float('max_temperature')->nullable();
+            $table->tinyInteger('is_notifiable')->default(0);
             $table->timestamps();
         });
     }
