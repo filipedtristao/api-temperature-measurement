@@ -34,7 +34,8 @@ class TemperatureMeasurement extends Model
         'temperature',
         'min_temperature',
         'max_temperature',
-        'is_notifiable'
+        'is_notifiable',
+        'notified_at'
     ];
 
     protected static function booted()
@@ -59,9 +60,14 @@ class TemperatureMeasurement extends Model
                     ->first();
 
                 $sendNotification = !$lastNotification
-                    || Carbon::parse($lastNotification->created_at)->diffInMinutes(Carbon::now()) > 1;
+                    || !$lastNotification->notified_at
+                    || Carbon::parse($lastNotification->notified_at)->diffInMinutes(Carbon::now()) > 1;
 
                 if ($sendNotification) {
+                    $temperatureMeasurement->update([
+                        'notified_at' => Carbon::now()
+                    ]);
+
                     User::first()->notify(new TemperatureOutOfRangeNotification());
                 }
             }
