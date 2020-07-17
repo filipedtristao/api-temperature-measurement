@@ -32,7 +32,7 @@
                             {{ $measure->is_notifiable ? 'SIM' : 'NÃO' }}
                         </td>
                         <td class="p-3 px-5">
-                            {{ $measure->created_at->format('d/m/Y H:i') }}
+                            {{ $measure->created_at }}
                         </td>
                     </tr>
                 @endforeach
