@@ -12,7 +12,9 @@ class TemperatureMeasurementController extends Controller
 {
     public function index()
     {
-        $temperatureMeasurements = TemperatureMeasurement::orderBy('created_at', 'DESC')->get();
+        $temperatureMeasurements = TemperatureMeasurement::orderBy('created_at', 'DESC')
+            ->limit(30)
+            ->get();
 
         $minTemperature = Configuration::minTemperature();
         $maxTemperature = Configuration::maxTemperature();
@@ -21,6 +23,17 @@ class TemperatureMeasurementController extends Controller
             'temperatureMeasurements' => $temperatureMeasurements,
             'minTemperature' => $minTemperature->value,
             'maxTemperature' => $maxTemperature->value
+        ]);
+    }
+
+    public function indexApi()
+    {
+        $temperatureMeasurements = TemperatureMeasurement::orderBy('created_at', 'DESC')
+            ->limit(10)
+            ->get();
+
+        return response()->json([
+            'data' => $temperatureMeasurements
         ]);
     }
 
